@@ -16,7 +16,6 @@ const EthersObject = () => {
     const [contract, setContract] = useState<any | null>(null);
 
 
-
     const getNetwork = async () => {
         if (provider) {
           const network = await provider.getNetwork();
@@ -24,12 +23,10 @@ const EthersObject = () => {
         }
     };    
 
-
-    const signingKey = async () => {
+    const getBlock = async () => {
         const zz = await provider.getBlock(100004) 
         alert(JSON.stringify(zz));
     }
-
 
     async function callContract() {
 
@@ -49,24 +46,15 @@ const EthersObject = () => {
         // This can be an address or an ENS name
         const address = "0x6b1792a04fcf47e9a2e8ee6c8d455e9e6ce8c5bb";
         
-        // Read-Only; By connecting to a Provider, allows:
-        // - Any constant function
-        // - Querying Filters
-        // - Populating Unsigned Transactions for non-constant methods
-        // - Estimating Gas for non-constant (as an anonymous sender)
-        // - Static Calling non-constant methods (as anonymous sender)
         const erc20 = new ethers.Contract(address, abi, provider);
-
         await erc20.connect(provider);
 
         alert( await erc20.getAddress() );
         alert( await erc20.decimals() );
         alert( await erc20.balanceOf("0x1a8929fbE9abEc00CDfCda8907408848cBeb5300") );
         alert( await erc20.symbol() );
-        
 
     }
-
 
     async function connectToMetamask() {
 
@@ -83,17 +71,19 @@ const EthersObject = () => {
 
     return(
         <div>
-            {selectedAddress && <span>
-                <p>Welcome {selectedAddress}</p>
-                <button onClick={() => getNetwork()}>Get Network</button>       
-                <br />         
-                Connected network - {network}
-                <br />
-                <button onClick={() => callContract()}>Call</button>  
-                <br />
-                <button onClick={() => signingKey()}>Signing Key</button>  
-                <br />                
-            </span>}
+            { selectedAddress && 
+                <span>
+                    <p>Welcome {selectedAddress}</p>
+                    <button onClick={() => getNetwork()}>Get Network</button>       
+                    <br /><br />         
+                    Connected network - {network}
+                    <br /><br />
+                    <button onClick={() => callContract()}>Call</button>  
+                    <br /><br />
+                    <button onClick={() => getBlock()}>Get Blocks</button>  
+                    <br />                
+                </span>
+            }
             
             {!selectedAddress && <span>
                 <button onClick={() => connectToMetamask()}>Connect to Metamask</button>
