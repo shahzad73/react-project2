@@ -176,7 +176,7 @@ const Ethereum = () => {
                 Balance: {useBalanceObject.data?.formatted} - {useBalanceObject.data?.symbol}
               </span>
             }
-            ---------------------------------------------------------<br />            
+            <br />---------------------------------------------------------            
         </div>
       )
   }
