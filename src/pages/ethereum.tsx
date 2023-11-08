@@ -8,7 +8,7 @@ import { custom } from 'viem'
 import { mnemonicToAccount } from 'viem/accounts';
 
 import { fetchToken } from '@wagmi/core'
-import { Input } from 'semantic-ui-react'
+import { Button, Input } from 'semantic-ui-react'
 
 import { 
   configureChains, 
@@ -80,7 +80,9 @@ const Ethereum = () => {
           <br /><br />
           <VimeDeploySwapContract />       
           <br /><br />
-          <ViemDeployERC20 />          
+          <ViemDeployERC20 />        
+          <br /><br />
+          <CallSwapCloseFunction /> 
       </WagmiConfig>
 
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} themeVariables= {{
@@ -501,7 +503,6 @@ const Ethereum = () => {
   
   }
 
-
   function SendATransactionTransferTokens() {
 
     const { config, error } = usePrepareContractWrite({
@@ -760,11 +761,16 @@ const Ethereum = () => {
     })
 
 
+    function SendCloseTransactionToSwap() {
+
+    }    
+
     return (
       <span>          
           --------------------------------------------------------------------------
           <h4>Viem - Deploy Swap</h4>
           <button  onClick={() => deployContract()}> Deploy </button>
+          <button onClick={SendCloseTransactionToSwap}>Call Close</button>
           <br />
 
           {useWaitForTransactionObj.isIdle && <span>Idle State - Waiting to send transaction</span>}
@@ -786,6 +792,8 @@ const Ethereum = () => {
               Contract is executed with transaction id - {hash}
             </span>
           }          
+
+
           <br />------------------------------------------------------------------------------
           <br />
       </span>
@@ -859,6 +867,60 @@ const Ethereum = () => {
   }
 
   
+  function CallSwapCloseFunction() {
+
+      const { config, error } = usePrepareContractWrite({
+        address: '0x5A22dc69aFe095Ca86450864954536Ed67F3832F',
+        abi: [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "originator",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "swapNumber",
+                  "type": "uint256"
+                }
+              ],
+              "name": "close",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+        ],
+        args: ['0x1a8929fbE9abEc00CDfCda8907408848cBeb5300', BigInt(103)],
+        functionName: 'close'
+      })
+      const contractWtite = useContractWrite(config) 
+    
+      function call1() {
+         alert(error)
+         contractWtite.write?.()
+      }
+
+    return (
+      <span> 
+
+          <button onClick={() => call1()}>  Swap Close  </button>
+        
+      </span>      
+    )
+
+  }
+
+
+
+
+
 }
 
 export default Ethereum;
