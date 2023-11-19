@@ -599,7 +599,7 @@ const Ethereum = () => {
 
 
       const client = createPublicClient({
-        chain: sepolia,
+        chain: mainnet,
         transport: http(),
       })
 
@@ -659,7 +659,7 @@ const Ethereum = () => {
     const [hash, setHash] = useState<undefined | `0x${string}`>();
 
     const walletClient: any = createWalletClient({
-      chain: sepolia,
+      chain: mainnet,
       transport: custom(window.ethereum)   // declare    declare var window: any     on top
     })
 
@@ -731,7 +731,7 @@ const Ethereum = () => {
     const [hash, setHash] = useState<undefined | `0x${string}`>();
 
     const walletClient: any = createWalletClient({
-      chain: sepolia,
+      chain: mainnet,
       transport: custom(window.ethereum)   // declare    declare var window: any     on top
     })
 
@@ -806,7 +806,7 @@ const Ethereum = () => {
     const [hash, setHash] = useState<undefined | `0x${string}`>();
 
     const walletClient: any = createWalletClient({
-      chain: sepolia,
+      chain: mainnet,
       transport: custom(window.ethereum)   // declare    declare var window: any     on top
     })
 
