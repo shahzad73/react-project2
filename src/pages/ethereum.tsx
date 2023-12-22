@@ -30,13 +30,13 @@ import {
 
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
-import { arbitrum, mainnet, polygon, sepolia } from 'wagmi/chains'
+import { arbitrum, avalanche, avalancheFuji, mainnet, polygon, sepolia } from 'wagmi/chains'
 
 import { ERC1404Contract } from '../data/erc1404';
 import { SwapperContract } from '../data/swapper';
 import { ERC20 } from '../data/erc20'
 
-const chains = [arbitrum, mainnet, polygon, sepolia]
+const chains = [arbitrum, mainnet, polygon, sepolia, avalancheFuji]
 const projectId = '0e2728e228f73097bf77370da15690e2'
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
@@ -55,7 +55,7 @@ const Ethereum = () => {
 
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>
+      <WagmiConfig config={wagmiConfig}>        
           <HomePage />
           <br /><br /><br />
           <BalanceWig />
@@ -76,6 +76,8 @@ const Ethereum = () => {
           <br /><br /><br />
           <ViemContract />
           <br /><br /><br />
+          Thinks to do before any deployment     change chains variable on top and include the chain and then in the specific deployment function also change createWalletClient and include the chain id
+          <br /><br /><br />          
           <ViewDeployERC1404 />   
           <br /><br />
           <VimeDeploySwapContract />       
@@ -806,7 +808,7 @@ const Ethereum = () => {
     const [hash, setHash] = useState<undefined | `0x${string}`>();
 
     const walletClient: any = createWalletClient({
-      chain: mainnet,
+      chain: avalancheFuji,
       transport: custom(window.ethereum)   // declare    declare var window: any     on top
     })
 
@@ -819,7 +821,7 @@ const Ethereum = () => {
             abi: ERC20.abi,
             account: account,
             bytecode: ERC20.bytecode,
-            args: [BigInt(1000000000000000000000),'TTT1']
+            args: [BigInt(100000000000000000000000),'TTT1']
           })
 
           setHash(hashTemp);          
